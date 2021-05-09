@@ -1,0 +1,58 @@
+<div style="width: 60%; margin: auto;">
+    <mat-toolbar>
+        <span style="margin: auto;">User info</span>
+    </mat-toolbar>
+    <div *ngIf="isSuccess" class="alert alert-success" role="alert">
+        Update User Infomation Successfully
+    </div>
+
+    <mat-card class="my-card">
+        <mat-card-content>
+            <form class="my-form" [formGroup]="accountDetailsForm" novalidate (ngSubmit)="onSubmitAccountDetails(accountDetailsForm.value)">
+                <mat-form-field class="full-width">
+                    <input matInput maxlength="40" placeholder="Nick name" formControlName="username">
+                </mat-form-field>
+                <div formGroupName="matching_passwords">
+                    <mat-form-field class="full-width">
+                        <input matInput type="password" placeholder="Password" formControlName="password" required>
+                        <mat-error *ngFor="let validation of accountValidationMessages.password">
+                            <mat-error class="error-message" *ngIf="accountDetailsForm.get('matching_passwords').get('password').hasError(validation.type) && (accountDetailsForm.get('matching_passwords').get('password').dirty || accountDetailsForm.get('matching_passwords').get('password').touched)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password" [errorStateMatcher]="parentErrorStateMatcher" required>
+                        <mat-error *ngFor="let validation of accountValidationMessages.confirm_password">
+                            <mat-error class="error-message" *ngIf="(accountDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| accountDetailsForm.get('matching_passwords').hasError(validation.type)) && (accountDetailsForm.get('matching_passwords').get('confirm_password').dirty || accountDetailsForm.get('matching_passwords').get('confirm_password').touched)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <mat-form-field class="full-width">
+                    <input matInput type="email" placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Phone" type="tel" formControlName="phone" required>
+                    <mat-error *ngFor="let validation of validationMessages.phone">
+                        <mat-error class="error-message" class="error-message" *ngIf="accountDetailsForm.get('phone').hasError(validation.type) && (accountDetailsForm.get('phone').dirty || accountDetailsForm.get('phone').touched)">
+                            {{ validation.message }}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-select formControlName="country" placeholder="Country">
+                        <mat-option *ngFor="let country of countries" [value]="country">
+                            {{ country.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-card-actions>
+                    <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!accountDetailsForm.valid">
+                        Submit
+                    </button>
+                    <!--REGISTER BUTTON HERE-->
+                </mat-card-actions>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

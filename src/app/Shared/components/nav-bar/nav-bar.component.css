@@ -1,0 +1,11 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.hover-class:hover {
+    color: deeppink;
+}
+
+.active {
+    color: deeppink;
+}
