@@ -1,58 +1,51 @@
-<div style="width: 60%; margin: auto;">
-    <mat-toolbar>
-        <span style="margin: auto;">User info</span>
-    </mat-toolbar>
-    <div *ngIf="isSuccess" class="alert alert-success" role="alert">
-        Update User Infomation Successfully
-    </div>
+<mat-card class="my-card">
+    <mat-card-content>
+        <form class="my-form" [formGroup]="addTodoForm" novalidate (ngSubmit)="onSubmitAddTodo(addTodoForm.value)">
+            <!-- <mat-form-field class="full-width">
+                <input matInput maxlength="40" placeholder="Add Todo..." formControlName="todo">
+            </mat-form-field>
+            <button class="submit-btn" color="primary" mat-raised-button type="submit">
+                Submit
+            </button> -->
+            <mat-form-field class="full-width">
+                <input matInput type="text" placeholder="Add Todo..." formControlName="todo">
+                <mat-error *ngFor="let validation of addValidationMessages.todo">
+                    <mat-error class="error-message" *ngIf="addTodoForm.get('todo').hasError(validation.type) && (addTodoForm.get('todo').dirty || addTodoForm.get('todo').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+                <button class="submit-btn" color="primary" mat-raised-button matSuffix [disabled]="!addTodoForm.valid" type="submit">
+                  Submit
+                </button>
+            </mat-form-field>
+            <!--REGISTER BUTTON HERE-->
+        </form>
+    </mat-card-content>
+</mat-card>
 
-    <mat-card class="my-card">
-        <mat-card-content>
-            <form class="my-form" [formGroup]="accountDetailsForm" novalidate (ngSubmit)="onSubmitAccountDetails(accountDetailsForm.value)">
-                <mat-form-field class="full-width">
-                    <input matInput maxlength="40" placeholder="Nick name" formControlName="username">
-                </mat-form-field>
-                <div formGroupName="matching_passwords">
-                    <mat-form-field class="full-width">
-                        <input matInput type="password" placeholder="Password" formControlName="password" required>
-                        <mat-error *ngFor="let validation of accountValidationMessages.password">
-                            <mat-error class="error-message" *ngIf="accountDetailsForm.get('matching_passwords').get('password').hasError(validation.type) && (accountDetailsForm.get('matching_passwords').get('password').dirty || accountDetailsForm.get('matching_passwords').get('password').touched)">{{validation.message}}</mat-error>
-                        </mat-error>
-                    </mat-form-field>
 
-                    <mat-form-field class="full-width">
-                        <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password" [errorStateMatcher]="parentErrorStateMatcher" required>
-                        <mat-error *ngFor="let validation of accountValidationMessages.confirm_password">
-                            <mat-error class="error-message" *ngIf="(accountDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| accountDetailsForm.get('matching_passwords').hasError(validation.type)) && (accountDetailsForm.get('matching_passwords').get('confirm_password').dirty || accountDetailsForm.get('matching_passwords').get('confirm_password').touched)">{{validation.message}}</mat-error>
-                        </mat-error>
-                    </mat-form-field>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
 
-                </div>
-                <mat-form-field class="full-width">
-                    <input matInput type="email" placeholder="Email" formControlName="email" required>
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Phone" type="tel" formControlName="phone" required>
-                    <mat-error *ngFor="let validation of validationMessages.phone">
-                        <mat-error class="error-message" class="error-message" *ngIf="accountDetailsForm.get('phone').hasError(validation.type) && (accountDetailsForm.get('phone').dirty || accountDetailsForm.get('phone').touched)">
-                            {{ validation.message }}
-                        </mat-error>
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <mat-select formControlName="country" placeholder="Country">
-                        <mat-option *ngFor="let country of countries" [value]="country">
-                            {{ country.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-card-actions>
-                    <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!accountDetailsForm.valid">
-                        Submit
-                    </button>
-                    <!--REGISTER BUTTON HERE-->
-                </mat-card-actions>
-            </form>
-        </mat-card-content>
-    </mat-card>
-</div>
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="todo">
+        <th mat-header-cell *matHeaderCellDef>Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef class="align-right"> Action </th>
+        <td mat-cell *matCellDef="let element" class="align-right">
+            <button (click)="editTodo(element)" style="margin-right: 10px;" mat-mini-fab color="primary" aria-label="Example icon button with a edit icon">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteConfirmDialog(element)" mat-mini-fab color="warn" aria-label="Example icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

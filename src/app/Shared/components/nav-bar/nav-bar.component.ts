@@ -15,11 +15,7 @@ export class NavbarComponent {
   }
 
   logoutUser() {
-    localStorage.removeItem('user');
+    localStorage.clear();
     this.router.navigate(['/login']);
-  }
-
-  registerUser() {
-    localStorage.removeItem('user');
   }
 }

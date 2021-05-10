@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Edit Todo</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.title">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancle</button>
+    <button mat-button (click)="onOKClick()" cdkFocusInitial>Edit</button>
+</div>

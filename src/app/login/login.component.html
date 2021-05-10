@@ -2,21 +2,16 @@
     <mat-toolbar>
         <span style="margin: auto;">LOGIN</span>
     </mat-toolbar>
-    <div *ngIf="isLoginFailed" class="alert alert-danger" role="alert">
+    <div *ngIf="isLoginFailed" style="color: red;" role="alert">
         {{errorMessage}}
     </div>
     <mat-card class="my-card">
         <mat-card-content>
-            <form class="my-form" [formGroup]="accountDetailsForm" (ngSubmit)="onLogin(accountDetailsForm.value)">
+            <form class="my-form" [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
                 <mat-form-field class="full-width">
-                    <mat-label>Nick name</mat-label>
-                    <input matInput placeholder="Nick name" formControlName="username">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="email">
                 </mat-form-field>
-                <mat-form-field class="full-width">
-                    <mat-label>Password</mat-label>
-                    <input matInput type="password" placeholder="Password" formControlName="password">
-                </mat-form-field>
-                <mat-checkbox class="example-margin" style="text-align: right;">Remember me!</mat-checkbox>
                 <mat-card-actions>
                     <button mat-raised-button color="primary">LOGIN</button>
                 </mat-card-actions>

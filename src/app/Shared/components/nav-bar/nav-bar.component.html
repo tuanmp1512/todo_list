@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <!--  <span>HOME</span> -->
-        <a mat-button routerLinkActive="active" routerLink="/register" class="hover-class" (click)="registerUser()">Register</a>
-        <a mat-button routerLinkActive="active" routerLink="/login" class="hover-class" (click)="logoutUser()">Login</a>
+        <span>MyTODOList</span>
+        <a mat-button routerLinkActive="active" routerLink="/home" class="hover-class">Home</a>
+        <a mat-button routerLinkActive="active" routerLink="/about-page" class="hover-class">About</a>
         <a mat-button class="hover-class" *ngIf="checkUserLogin()" (click)="logoutUser()">Logout</a>
     </mat-toolbar-row>
 </mat-toolbar>
